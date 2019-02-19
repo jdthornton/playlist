@@ -1,0 +1,107 @@
+.popup {
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 50px;
+    visibility: visible;
+    z-index: 7000;
+    background-color: #383838;
+    padding: 10px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+
+.info {
+    color: white;
+    width: 40%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+}
+
+.info > img {
+    display: none;
+}
+
+.artistName {
+    font-size: 0.9em;
+}
+
+.controls {
+    display: inline-block;
+    padding: 0 15px;
+    width: 60%;
+}
+
+.buttons {
+    justify-content: space-around;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.buttons > svg {
+    cursor: pointer;
+    fill: hsla(0,0%,100%,.8);
+}
+
+    .buttons > svg:hover {
+        fill: #fff;
+    }
+
+
+.progress {
+    height: 5px;
+    border-radius: 4px;
+    background-color: #333;
+    cursor: pointer;
+    z-index: 2000;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress > .bar {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+}
+
+    .progress > .bar > div {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 50%;
+        background: hsla(0,0%,100%,.8);
+    }
+
+    .progress > .bar > div:hover {
+        background: #fff;
+    }
+
+@media (min-width: 800px) {
+
+    .popup {
+        width: 600px;
+        right: 5px;
+        height: 70px;
+        bottom: 5px;
+        left: auto;
+        padding: 15px;
+    }
+
+    .info > img {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .buttons {
+        padding: 0 10%;
+    }
+}

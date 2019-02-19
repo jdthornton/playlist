@@ -1,0 +1,48 @@
+import React from 'react';
+
+import styles from './index.css';
+
+class PlaylistSettings extends React.Component {
+    state = {
+        value: '',
+        selectedOption: null
+    }
+    handleChange = (event) => {
+        this.setState({ value: event.target.value });
+    }
+    handleOptionChange = (event) => {
+        this.setState({
+            selectedOption: event.target.value
+        });
+    }
+    handleSubmit = () => {
+        this.props.savePlaylist(this.state.value, this.state.selectedOption)
+    }
+    render() {
+        return (
+            <div>
+                <svg className={styles.close} onClick={this.props.close} xmlns="http://www.w3.org/2000/svg" fill="#999" height="30" viewBox="0 0 24 24" width="30">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                    <path d="M0 0h24v24H0z" fill="none" />
+                </svg>
+                <div className={styles.header}>Playlist Information</div>
+                <input className={styles.input} type="text" placeholder="Title" value={this.state.value} onChange={this.handleChange} />
+                <div>
+                    <label className={styles.radio}>
+                        <input type="radio" name="privacy" value="public" checked={this.state.selectedOption === 'public'} onChange={this.handleOptionChange} />
+                        <span> Public </span>
+                    </label>
+                    <label className={styles.radio}>
+                        <input type="radio" name="privacy" value="private" checked={this.state.selectedOption === 'private'} onChange={this.handleOptionChange} />
+                        <span> Private </span>
+                    </label>
+                </div>
+                <div onClick={this.handleSubmit} className={styles.submitBtn}>
+                    Save Playlist
+                </div>
+            </div>
+        )
+    }
+}
+
+export default PlaylistSettings;
