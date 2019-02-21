@@ -38,7 +38,7 @@ loadableReady(() => {
     hydrate(
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <App isMobile={isMobile} />
+          <App />
         </ConnectedRouter >
       </Provider>,
         document.getElementById('root'),

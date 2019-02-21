@@ -12,7 +12,7 @@ function checkStatus(response) {
   }
 
 export const getToken = () =>
-    fetch(`${API_URL}/playlist/token`, {
+    fetch(`${API_URL}/token`, {
         method: 'get',
         headers: {
             Accept: 'application/json',

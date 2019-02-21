@@ -14,8 +14,8 @@ const App = () =>
         <Helmet><title>Playlist</title></Helmet>
         <Player />
         <Switch>
-          <Route exact path="/playlist" component={Home} />
-          <Route path='/playlist/:query' component={Playlist} />
+          <Route exact path="/" component={Home} />
+          <Route path='/:query' component={Playlist} />
         </Switch>
     </div>
 

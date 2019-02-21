@@ -53,17 +53,12 @@ class PlayerContainer extends React.Component {
             return null;
         }
 
-        var currentTime = 0;
-        var totalTime = 0;
         if (this.audio) {
             if (this.is_progress_dirty) {
                 this.is_progress_dirty = false;
 
-                this.audio.currentTime = this.audio.duration * progress;
+                this.audio.currentTime = this.audio.duration * this.props.progress;
             }
-
-            currentTime = this.audio.currentTime;
-            totalTime = this.audio.duration;
         }
 
         return(
