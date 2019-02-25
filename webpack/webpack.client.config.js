@@ -8,7 +8,7 @@ const CONFIG_VARIABLES = require('./config');
 const OUTPUT_DIR = path.resolve(__dirname, '../dist');
 
 module.exports = {
-  mode: isDev ? "development" : "production",
+  mode: "development",
   entry: './src/client/index.js',
   output: {
     filename: '[name].js',
@@ -24,15 +24,6 @@ module.exports = {
         use: {
           loader: "babel-loader"
         }
-      },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: "html-loader",
-            options: { minimize: true }
-          }
-        ]
       },
       {
         test: /\.css$/,
@@ -51,38 +42,22 @@ module.exports = {
         ]
       },
       {
-        test: /\.(jpg|png)$/,
-        use: {
-          loader: "url-loader",
-          options: {
-            limit: 25000,
-          },
-        },
-      },
-      {
-          test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
-          use: {
-              loader: 'file-loader',
-              options: {
-                  name: '[name].[ext]',
-                  outputPath: 'fonts/'
-              }
-          }
-      },
-      {
-        test: /\.svg$/,
-        loader: 'svg-inline-loader'
-      }
+				test: /\.(jpg|svg|png|gif)$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							name: 'images/[name].[ext]',
+						},
+					},
+				],
+			}
     ]
   },
   plugins: [
     new HtmlWebPackPlugin({
       template: path.resolve(__dirname, '../src/client/index.ejs'),
       filename: "./index.html"
-    }),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css'
     }),
     new webpack.DefinePlugin(CONFIG_VARIABLES)
   ],

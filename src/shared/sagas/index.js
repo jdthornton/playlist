@@ -5,6 +5,7 @@ import playerSagas from './player';
 import playlistsSagas from './playlists';
 import searchSagas from './search';
 import tracksSagas from './tracks';
+import modalSagas from './modal';
 
 export default function* rootSaga() {
   yield all([
@@ -12,6 +13,7 @@ export default function* rootSaga() {
     playerSagas(),
     playlistsSagas(),
     searchSagas(),
-    tracksSagas()
-  ]);
+    tracksSagas(),
+    modalSagas()
+  ])
 }

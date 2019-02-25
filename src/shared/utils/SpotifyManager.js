@@ -32,17 +32,23 @@ export const autocomplete = (name, token) =>
 export const login = () => {
     return new Promise((resolve, reject) => {
         let url = 'https://accounts.spotify.com/en/authorize?response_type=token&client_id=' +
-            SPOTIFY_APP_ID + '&redirect_uri=' + encodeURIComponent(DOMAIN_URL+"/redirect.html") +
+            SPOTIFY_APP_ID + '&redirect_uri=' + encodeURIComponent(DOMAIN_URL+"/spotify-redirect.html") +
             '&scope=' + encodeURIComponent('playlist-modify-public playlist-modify-private');
-        window.open(
+        let spotifyLoginWindow = window.open(
             url,
             'Spotify',
             'menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,width=400,height=500'
         );
+        var timer = setInterval(checkIfClosed, 500);
+        function checkIfClosed() {
+          if (spotifyLoginWindow.closed) {
+              clearInterval(timer);
+              reject()
+          }
+        }
         window.addEventListener('storage', (data) => {
-            console.log(data.key, data.newValue);
-            if (data.key === 'access_token') {
-                resolve(data.newValue);
+            if (data.key === 'user_token') {
+              resolve(data.newValue);
             }
         });
     })
@@ -61,13 +67,6 @@ export const getPlaylistsByCategory = (id, token) =>
     })
       .then(checkStatus)
       .then((response) => response.json())
-
-export const getTrack = (id, token) =>
-    fetch(`${SPOTIFY_API_URL}/tracks/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(checkStatus)
-      .then(response => response.json())
 
 export const getTracks = (track, token) => {
     return new Promise((resolve, reject) =>
@@ -96,10 +95,8 @@ export const getTracks = (track, token) => {
                                         if (e === 0) {
                                             total -= 1;
                                             if (total === 0) {
-
                                                 let tracks = makePlaylist(trackList, track.popularity)
-                                                let mainTrack = { image: track.album.images[0].url, title: `${track.name}, ${track.artists[0].name}` }
-                                                resolve({ tracks: tracks, mainTrack: mainTrack });
+                                                resolve(tracks);
                                             }
                                         }
                                     }
@@ -114,8 +111,8 @@ export const getTracks = (track, token) => {
             })
         )
 }
-export const getPlaylistTracks = (id, token) =>
-    fetch(`${SPOTIFY_API_URL}/users/spotify/playlists/${id}/tracks`, {
+export const getPlaylistTracks = (url, token) =>
+    fetch(url, {
         headers: { Authorization: `Bearer ${token}` }
     })
         .then(checkStatus)
@@ -124,17 +121,13 @@ export const getPlaylistTracks = (id, token) =>
             let length = items.length;
             let tracks = [];
             for (var i = 0; i < length; i++) {
-                tracks.push(items[i].track);
+                if(items[i].track){
+                  tracks.push(items[i].track);
+                }
             }
             return tracks;
         })
 
-export const getPlaylist = (id, token) =>
-    fetch(`${SPOTIFY_API_URL}/users/spotify/playlists/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(checkStatus)
-      .then(response => response.json())
 
 export const savePlaylist = (token, userId, name, isPublic, tracks) => {
     return new Promise((resolve, reject) =>

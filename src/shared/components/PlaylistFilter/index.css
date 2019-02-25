@@ -2,7 +2,7 @@
     background-color: #fff;
     position: absolute;
     top: 40px;
-    left: 0;
+    left: 2.5vw;
     font-weight: normal;
     display: inline-flex;
     flex-flow: column wrap;
@@ -14,6 +14,7 @@
     box-sizing: border-box;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
+
 
 .category {
     line-height: normal;
@@ -27,14 +28,17 @@
 }
 
 .header {
-    position: sticky;
-    top: -1px;
-    padding: 10px 0;
-    background-color: #fff;
-    font-weight: 700;
-    font-size: 18px;
-    color: #333;
-    z-index: 9999;
+  position: sticky;
+  padding: 10px 2.5vw;
+  flex-shrink: 0;
+  background-color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  color: #333;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .select {
@@ -63,4 +67,13 @@
     .menu {
         max-height: 40vh;
     }
+}
+
+@media (min-width: 1440px){
+  .menu {
+    left: 10vw;
+  }
+  .header {
+    padding: 10px 10vw;
+  }
 }

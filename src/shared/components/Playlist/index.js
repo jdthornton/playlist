@@ -3,84 +3,40 @@ import { Link } from 'react-router-dom';
 import { Parallax } from 'react-parallax';
 
 import SearchBox from '../../containers/SearchBox';
-import Track from '../../containers/Track';
-import Toast from '../../containers/Toast';
-import loader from '../../images/loading.svg';
+import Tracklist from '../../containers/Tracklist';
+import Modal from '../../containers/Modal';
+
 import styles from './index.css';
 
-const Playlist = ({isLoading, tracks, mainTrack, userPlaylist, savePlaylist, addTrack, removeTrack, makePlaylist}) => {
-  if (isLoading) {
-      return (
-          <div className={styles.loader}>
-              <img src={loader} />
+const Playlist = ({mainTrack, openModal, addTrack, url}) =>
+  <React.Fragment>
+      <Parallax
+          bgImage={mainTrack.image}
+          strength={1000}
+          style={{flexShrink: 0}}
+      >
+          <div className={styles.parallax}>
+              <div className={styles.gradient}>
+                <Link to="/" className={styles.closeBtn}>
+                  <svg viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                </Link>
+                <div className={styles.title}>
+                    {mainTrack.title}
+                </div>
+                {url && <img src={url} className={styles.user} />}
+                <span className={styles.saveBtn} onClick={openModal}>SAVE</span>
+              </div>
           </div>
-      )
-  }
-
-  return (
-      <div>
-          <div className={styles.info}>
-            <Toast
-              className={styles.toastList}
-              animations={{
-                enter: styles.enter,
-                enterActive: styles.enterActive,
-                exit: styles.exit,
-                exitActive: styles.exitActive
-              }}
-              animationTime={300}
-              delay={1500}
-            />
-              {!tracks.length &&
-                  <div>Could not load playlist</div>
-              }
-              {mainTrack &&
-                  <Parallax
-                      bgImage={mainTrack.image}
-                      strength={500}
-                  >
-                      <div className={styles.header}>
-                          <Link to="/" className={styles.closeBtn}>
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" height="30" viewBox="0 0 24 24" width="30">
-                                  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-                                  <path d="M0 0h24v24H0z" fill="none" />
-                              </svg>
-                          </Link>
-                          {/*!userPlaylist && <span className={styles.saveBtn} onClick={savePlaylist}>SAVE</span>*/}
-                          <div className={styles.title}>
-                              {mainTrack.title}
-                          </div>
-                          <div className={styles.gradient}></div>
-                      </div>
-                  </Parallax>
-              }
-          </div>
-          <div className={styles.playlist}>
-              {!userPlaylist &&
-                  <div className={styles.controls}>
-                      <SearchBox
-                          placeholder="Add a new song to the playlist"
-                          theme={{ suggestionsContainer: styles.suggestionsContainer, input: styles.input }}
-                          handleSubmit={addTrack}
-                      />
-                  </div>
-              }
-              <ul>
-                  {tracks.length &&
-                      tracks.map((track, i) =>
-                          <Track
-                              track={track}
-                              key={'track_' + track.id}
-                              index={i}
-                              userPlaylist={userPlaylist}
-                          />
-                      )
-                  }
-              </ul>
-          </div>
+      </Parallax>
+      <div className={styles.playlist}>
+        <SearchBox
+            placeholder="Add a new song to the playlist"
+            theme={{ container: styles.inputContainer, suggestion: styles.suggestion, suggestionsContainer: styles.suggestionsContainer, input: styles.input }}
+            handleSubmit={addTrack}
+        />
+        <Tracklist />
       </div>
-  )
-}
-
+      <Modal />
+  </React.Fragment>
 
 export default Playlist

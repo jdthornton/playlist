@@ -5,26 +5,35 @@
     display: flex;
     align-items: center;
 }
-
 .backBtn {
   color: #e0e0e0;
   font-weight: 700;
   font-size: 12px;
 }
-.header {
-  width: 100%;
-  display: flex;
-  padding: 10px;
-  height: 50px;
-  box-sizing: border-box;
-}
 .searchBox {
     width: 80%;
-    margin: 25% auto;
+    margin: 30% auto;
     justify-content: center;
     display: flex;
     align-items: center;
     position: relative;
+}
+.inputContainer {
+    width: 100%;
+}
+.suggestion {
+    padding: 15px 10px;
+    background: #fff;
+    cursor: pointer;
+    text-align: left;
+    color: #444;
+    box-sizing: border-box;
+    font-family: Lato,sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+}
+.suggestion:hover {
+    color: #d28273;
 }
 .icon {
     width: 25px;
@@ -50,52 +59,29 @@
     padding: 0;
     font-size: 12px;
     position: absolute;
+    width: 100%;
+    border-radius: 5px;
     overflow: hidden;
-    width: calc(100% + 30px);
-    border-top: none;
-    border-radius: 4px;
     box-shadow: 1px 2px 5px 0 rgba(0,0,0,.2);
-    border-left: 1px solid rgba(100,100,100,.2);
     z-index: 199999;
     background-color: #fff;
 }
-
-.spotifyLogo {
-    position: absolute;
-    top: 10px;
-    right: 25px;
-    width: 75px;
-    height: 23px;
-}
-
 .playlists {
     line-height: 0;
-    padding: 0 2.5vw 2.5vw 2.5vw;
+    padding: 0 2.5vw;
     position: relative;
+    flex-grow: 1;
 }
-
-
 @media (min-width: 800px) {
     .searchBox {
       margin: 10% auto;
-    }
-    .spotifyLogo {
-        width: 90px;
-        height: 27px;
     }
     .input {
         font-size: 28px;
     }
 }
-
-@media (min-width: 1024px) {
-    .playlists {
-        box-sizing: border-box;
-    }
-}
-
 @media (min-width: 1440px){
   .playlists {
-    padding: 0 10vw 2.5vw 10vw;
+    padding: 0 10vw;
   }
 }

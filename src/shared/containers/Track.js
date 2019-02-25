@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import { removeTrack, makePlaylist } from '../reducers/tracks';
 import { playerActions } from '../reducers/player';
-import { makeSelection } from '../reducers/search';
 import { addToast } from '../reducers/toast';
 
 import Track from '../components/Track';
@@ -13,8 +12,7 @@ class TrackContainer extends React.PureComponent {
       this.props.removeTrack(this.props.index);
   }
   makePlaylist = () => {
-      this.props.makeSelection(this.props.track)
-      this.props.makePlaylist(this.props.track.id)
+      this.props.makePlaylist(this.props.track)
   }
   handlePlay = (e) => {
       if (this.props.isSelected) {
@@ -22,15 +20,15 @@ class TrackContainer extends React.PureComponent {
       } else if (this.props.track.preview_url) {
           this.props.loadAndPlay(this.props.index);
       } else {
-        this.props.addToast()
+        this.props.addToast("Preview Not Available")
       }
   }
   render(){
-    return <Track track={this.props.track} userPlaylist={this.props.userPlaylist} isPlaying={this.props.isPlaying} isSelected={this.props.isSelected} handleRemove={this.handleRemove} makePlaylist={this.makePlaylist} handlePlay={this.handlePlay} />
+    return <Track track={this.props.track} isPlaying={this.props.isPlaying} handleRemove={this.handleRemove} makePlaylist={this.makePlaylist} handlePlay={this.handlePlay} />
   }
 }
 
 export default connect(
     ({ player }, { track }) => ({ isPlaying: player.loadedTrack && (player.loadedTrack.track.id === track.id) && player.isPlaying, isSelected: player.loadedTrack && (player.loadedTrack.track.id === track.id) }),
-    {removeTrack, makePlaylist, makeSelection, addToast, ...playerActions}
+    {removeTrack, makePlaylist, addToast, ...playerActions}
 )(TrackContainer);

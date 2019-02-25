@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import styles from './index.css';
 
@@ -10,20 +9,23 @@ const Playlists = props => {
       );
   }
 
-  return (
-      <React.Fragment>
-          {props.playlists.map(playlist =>
-              <Link
-                  to={'/get?id='+playlist.id}
-                  key={playlist.id}
-                  className={styles.tile}
-                  style={{ backgroundImage: `url(${playlist.images[0].url})` }}
-                  onClick={() => { props.makeSelection(playlist) }}
-              >
-              </Link>
-          )}
-      </React.Fragment>
-  );
+  if(props.playlists.length){
+    return (
+        <React.Fragment>
+            {props.playlists.map(playlist =>
+                <div
+                    key={playlist.id}
+                    className={styles.tile}
+                    style={{ backgroundImage: `url(${playlist.images[0].url})` }}
+                    onClick={() => { props.handleClick(playlist) }}
+                >
+                </div>
+            )}
+        </React.Fragment>
+    );
+  }
+
+  return null
 }
 
 export default Playlists;

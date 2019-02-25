@@ -6,6 +6,6 @@ import PlaylistFilter from '../components/PlaylistFilter';
 
 
 export default connect(
-    ({playlists}) => ({categoryName: playlists.categoryName}),
+    ({playlists}) => ({categoryName: playlists.categoryName, error: playlists.error}),
     {handleSelect: requestPlaylists}
 )(PlaylistFilter);

@@ -1,94 +1,116 @@
-
 .playlist {
-    padding: 5px;
-    box-sizing: border-box;
+    flex-grow: 1;
 }
 
-.header {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    width: 100%;
-    height: 300px;
-    position: relative;
-    overflow: hidden;
+.parallax {
+    height: 200px;
+    background: linear-gradient(180deg,transparent 60%,rgba(0,0,0,.8));
 }
 
 .gradient {
     position: absolute;
     width: 100%;
-    height: 150px;
     bottom: 0;
-    background: -webkit-linear-gradient(top,transparent,rgba(0,0,0,.8));
-    background: linear-gradient(180deg,transparent 0,rgba(0,0,0,.8));
     z-index: 10;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
+.user {
+  border-radius: 50%;
+  height: 28px;
+  width: 28px;
+  margin-right: 10px;
+}
 .title {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
     color: #fff;
     font-weight: 700;
-    font-size: 28px;
+    font-size: 20px;
     z-index: 20;
+    flex-grow: 1;
+    padding-left: 10px;
 }
 
 .closeBtn {
-    background-color: rgba(0,0,0,.5);
-    padding: 7px;
-    margin-top: 10px;
-    margin-left: 10px;
-    float: left;
-    cursor: pointer;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+
+.closeBtn svg {
+  width: 26px;
+  height: 26px;
+  fill: #fff;
 }
 
 .saveBtn {
-    float: right;
-    margin: 10px 15px;
-    cursor: pointer;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 10px;
-    background-color: #d28273;
-    font-size: 14px;
-    font-weight: 600;
+  cursor: pointer;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 10px;
+  background-color: #d28273;
+  font-size: 10px;
+  font-weight: 600;
 }
-
-.loader {
-    height: 100vh;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-}
-
 
 .input {
-    width: 100%;
-    border-radius: 4px;
-    padding: 15px 10px 15px 20px;
-    font-size: 16px;
-    box-sizing: border-box;
-    border: none;
+  width: 96%;
+  box-shadow: inset 0px 0px 3px 0 rgba(0,0,0,0.2);
+  padding: 0 10px;
+  border-radius: 30px;
+  font-size: 16px;
+  box-sizing: border-box;
+  z-index: 5000;
+  border: none;
+}
+
+.input::placeholder {
+  color: #ddd;
+  font-size: 14px;
 }
 
 .suggestionsContainer {
-    margin: 5px 0 0;
-    padding: 0;
-    font-size: 12px;
-    position: absolute;
-    overflow: hidden;
-    width: 100%;
-    border-top: none;
-    border-radius: 4px;
-    box-shadow: 1px 2px 5px 0 rgba(0,0,0,.2);
-    border-left: 1px solid rgba(100,100,100,.2);
-    z-index: 199999;
-    background-color: #fff;
+  font-size: 12px;
+  position: absolute;
+  top: 13px;
+  width: 96%;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 1px 2px 4px 0 rgba(0,0,0,.2);
+  z-index: 4000;
+  background-color: #fff;
+}
+
+.inputContainer {
+  width: 100%;
+  height: 55px;
+  padding: 10px 0;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.suggestion {
+    padding: 10px;
+    background: #fff;
+    cursor: pointer;
+    text-align: left;
+    color: #666;
+    box-sizing: border-box;
+    font-family: Lato,sans-serif;
+    font-size: 16px;
+}
+
+.suggestoion:first-child {
+  margin-top: 20px;
+}
+
+.suggestion:hover {
+    color: #d28273;
 }
 
 .controls {
@@ -96,38 +118,38 @@
     display: flex;
     align-items: center;
 }
-.enter {
-  opacity: 0;
-}
-
-.enterActive {
-  opacity: 1;
-  transition: opacity 300ms ease-in;
-}
-
-.exit {
-  opacity: 1;
-}
-
-.exitActive {
-  opacity: 0;
-  transition: opacity 300ms ease-in;
-}
-
-.toastList {
-  position: fixed;
-  top: 15px;
-  left: 50%;
-  margin-left: -95px;
-  width: 190px;
-  display: flex;
-  flex-direction: column;
-  z-index: 30000;
-  color: #868686;
-}
 
 @media (min-width: 800px) {
-    .playlist {
-        padding: 20px;
+    .parallax {
+        height: 250px;
+    }
+    .inputContainer {
+      height: 60px;
+    }
+    .input,.suggestionsContainer {
+      width: 98%;
+    }
+    .user {
+      border-radius: 50%;
+      height: 40px;
+      width: 40px;
+      margin-right: 20px;
+    }
+    .gradient {
+      padding: 15px;
+    }
+    .closeBtn {
+      width: 32px;
+      height: 32px;
+    }
+    .closeBtn svg {
+      width: 32px;
+      height: 32px;
+    }
+    .title {
+      font-size: 25px;
+    }
+    .saveBtn {
+      font-size: 14px;
     }
 }

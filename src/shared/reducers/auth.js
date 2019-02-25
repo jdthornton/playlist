@@ -1,14 +1,9 @@
 export const RECEIVE_TOKEN = 'RECEIVE_TOKEN';
 export const RECEIVE_USER_DATA = 'RECEIVE_USER_DATA';
-export const LOGOUT = "LOGOUT";
 export const LOGIN = "LOGIN";
 
-export const authActions = {
-    login: () => ({type: LOGIN}),
-    logout: () => ({ type: LOGOUT })
-};
-
-const initialState = { token: '', user: null };
+export const login = () => ({type: LOGIN})
+const initialState = { token: null, user: null };
 
 const authReducer = (previousState = initialState, { type, payload }) => {
     switch (type) {
@@ -21,11 +16,6 @@ const authReducer = (previousState = initialState, { type, payload }) => {
           return {
               ...previousState,
               user: payload
-          };
-        case LOGOUT:
-          return {
-              ...previousState,
-              user: null
           };
         default:
             return previousState;

@@ -1,33 +1,25 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { actionCreators } from '../../reducers/modal';
 
 import PlaylistSettings from '../PlaylistSettings';
 import styles from './index.css';
 
-class Modal extends React.Component {
-    constructor() {
-        super();
-        this.renderContent = this.renderContent.bind(this);
+class Modal extends React.PureComponent {
+    handleSubmit = () => {
+      this.props.handleSavePlaylist(this.props.name, this.props.privacy)
     }
-    renderContent() {
-        let { error, isOpen } = this.props;
-
-        if (isOpen === "loading") {
-            return <div>Loading...</div>;
+    renderContent = () => {
+        if (this.props.isLoading) {
+            return <div className={styles.loader}>Loading...</div>;
         }
-        else if (error) {
-            return <div onClick={this.props.closeModal}>{error}</div>;
+        else if (this.props.error) {
+            return <div>{error}</div>;
         }
-        else if (isOpen === "playlist") {
-            return <PlaylistSettings savePlaylist={this.props.savePlaylist} close={this.props.closeModal} />;
+        else {
+            return <PlaylistSettings name={this.props.name} privacy={this.props.privacy} savePlaylist={this.handleSubmit} close={this.props.closeModal} handleInputChange={this.props.handleInputChange} />;
         }
     }
     render() {
-        let { isOpen } = this.props;
-
-        if (isOpen) {
+        if (this.props.isOpen) {
             return (
                 <div className={styles.container}>
                     <div className={styles.content}>
@@ -41,7 +33,4 @@ class Modal extends React.Component {
     }
 }
 
-export default connect(
-    ({playlist}) => playlist.modal,
-    dispatch => bindActionCreators(actionCreators, dispatch)
-)(Modal);
+export default Modal;

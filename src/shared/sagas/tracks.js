@@ -1,39 +1,46 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
-import { getTrack, getTracks, getPlaylistTracks, getPlaylist, getToken, savePlaylist } from '../utils/SpotifyManager';
+import { push } from 'connected-react-router';
+import { getTracks, getPlaylistTracks } from '../utils/SpotifyManager';
 import { getAuthState } from './auth';
 import { getSearchState } from './search';
+import { addToast } from '../reducers/toast';
 
 import {
   REQUEST_PLAYLIST,
   MAKE_PLAYLIST,
-  RECEIVE_PLAYLIST
+  REQUEST_PLAYLIST__SUCCESS,
+  REQUEST_PLAYLIST__FAILURE
 } from '../reducers/tracks';
-import {
-  makeSelection
-} from '../reducers/search';
 
-function* makePlaylistSaga({payload}){
-  let { token } = yield select(getAuthState)
-  let { selection } = yield select(getSearchState);
-  if (selection) {
-      let { tracks, mainTrack } = yield call(getTracks, selection, token);
+export const getTracklist = ({tracks}) => tracks.tracks
 
-      yield put({ type: RECEIVE_PLAYLIST, payload: { tracks: tracks, mainTrack: mainTrack, userPlaylist: false }})
-  } else {
-      let track = yield call(getTrack, payload, token);
-      let { tracks, mainTrack } = yield call(getTracks, track, token);
+function* makePlaylistSaga(action){
+  try {
+    yield put(push("/make?id="+action.payload.id))
+    let { token } = yield select(getAuthState)
 
-      yield put({ type: RECEIVE_PLAYLIST, payload: { tracks: tracks, mainTrack: mainTrack, userPlaylist: false }})
-      yield put(makeSelection(track));
+    let payload = yield call(getTracks, action.payload, token);
+    yield put({ type: REQUEST_PLAYLIST__SUCCESS, payload})
+
+  } catch (e) {
+    yield put(push("/"))
+    yield put(addToast("Error Loading Playlist"))
   }
 }
 
-function* getPlaylistSaga({payload}){
-  let { token } = yield select(getAuthState);
-  let { selection } = yield select(getSearchState);
+function* getPlaylistSaga(action){
+  try {
+    yield put(push("/get?id="+action.payload.id))
+    let { token } = yield select(getAuthState);
 
-  let tracks = yield call(getPlaylistTracks, payload, token);
-  yield put({ type: RECEIVE_PLAYLIST, payload: { tracks: tracks, mainTrack: { image: selection.images[0].url, title: selection.name }, userPlaylist: true }})
+    let payload = yield call(getPlaylistTracks, action.payload.tracks.href, token);
+    yield put({ type: REQUEST_PLAYLIST__SUCCESS, payload})
+
+  } catch (e) {
+    yield put(push("/"))
+    yield put(addToast("Error Loading Playlist"))
+  }
+
 }
 
 export default function* tracksSagas() {

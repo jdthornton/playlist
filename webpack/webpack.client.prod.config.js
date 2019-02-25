@@ -8,7 +8,6 @@ const BrotliPlugin = require('brotli-webpack-plugin');
 const LoadablePlugin = require('@loadable/webpack-plugin')
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const CONFIG_VARIABLES = require('./config');
 const OUTPUT_DIR = path.resolve(__dirname, '../dist');
@@ -21,8 +20,8 @@ module.exports = {
 	},
 	mode: 'production',
 	output: {
-		filename: '[name].[hash].js',
-		chunkFilename: "[id].[hash].js",
+		filename: 'js/[name].[hash].js',
+		chunkFilename: "js/[id].[hash].js",
 		path: OUTPUT_DIR,
 		publicPath: '/',
 	},
@@ -77,8 +76,8 @@ module.exports = {
 	},
 	plugins: [
 		new MiniCssExtractPlugin({
-			filename: '[name].[contenthash].css',
-			chunkFilename: '[name]-[hash:8].css',
+			filename: 'css/[name].[contenthash].css',
+			chunkFilename: 'css/[name]-[hash:8].css',
     }),
 		new OptimizeCssAssetsPlugin({
 			assetNameRegExp: /\.css$/g,
@@ -104,10 +103,6 @@ module.exports = {
 		new LoadablePlugin(),
 		new SWPrecacheWebpackPlugin({
 			filename: 'serviceWorker.js'
-		}),
-		new CopyWebpackPlugin([
-        { from: './src/client/manifest.json' },
-				{ from: './src/client/icons' }
-    ])
+		})
 	],
 };

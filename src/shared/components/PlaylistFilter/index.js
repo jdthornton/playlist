@@ -2,6 +2,13 @@ import React from 'react';
 
 import styles from './index.css';
 
+const CATEGORIES = [
+  {name: "Featured", slug: "featured-playlists"},
+  {name: "Top", slug: "categories/toplists/playlists"},
+  {name: "Focus", slug: "categories/focus/playlists"},
+  {name: "Chill", slug: "categories/chill/playlists"}
+];
+
 class PlaylistFilter extends React.Component {
     state = { menuOpen: false }
     componentDidMount() {
@@ -22,23 +29,21 @@ class PlaylistFilter extends React.Component {
     render() {
         const { categoryName } = this.props;
         return (
-            <div ref={top => { this.top = top; }} >
-                <div className={styles.header} onClick={this.toggleMenu} ref={node => { this.node = node; }}>
-                    <span className={styles.select}>
-                        {categoryName}
-                        <svg height="24" width="24" viewBox="0 0 24 24" fill="#000">
-                            <path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z" />
-                        </svg>
-                    </span>
-                    {this.state.menuOpen &&
-                        <div className={styles.menu}>
-                        <div onClick={() => { this.props.handleSelect("Featured", 'featured-playlists') }} className={styles.category}>Featured</div>
-                        <div onClick={() => { this.props.handleSelect("Top", 'categories/toplists/playlists') }} className={styles.category}>Top</div>
-                        <div onClick={() => { this.props.handleSelect("Focus", 'categories/focus/playlists') }} className={styles.category}>Focus</div>
-                        <div onClick={() => { this.props.handleSelect("Chill", 'categories/chill/playlists') }} className={styles.category}>Chill</div>
-                    </div>
-                    }
-                </div>
+            <div className={styles.header} onClick={this.toggleMenu} ref={node => { this.node = node; }}>
+                <span className={styles.select}>
+                    {categoryName}
+                    <svg height="24" width="24" viewBox="0 0 24 24" fill="#000">
+                        <path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z" />
+                    </svg>
+                </span>
+                {this.state.menuOpen &&
+                  <div className={styles.menu}>
+                    {CATEGORIES.map(category =>
+                      <div onClick={() => { this.props.handleSelect(category); }} className={styles.category}>{category.name}</div>
+                    )}
+                  </div>
+                }
+                {this.props.error && <svg width="28" height="28" viewBox="0 0 24 24" fill="#d28273"><title>Error</title><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>}
             </div>
         );
     }

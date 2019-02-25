@@ -11,8 +11,10 @@ const server = Server(app);
 if(process.env.NODE_ENV === 'development'){
   app.use(cors({credentials: true, origin: 'http://localhost:8080'}));
 }
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 
 
 import routes from './routes/api';
@@ -20,16 +22,19 @@ import routes from './routes/api';
 app.use('/api/v1', routes);
 
 app.use(function(error, req, res, next){
-  res.sendStatus(res.statusCode || 500);
+  if(error){
+    res.sendStatus(500)
+  } else {
+    res.sendStatus(res.statusCode)
+  }
 });
 
 if(process.env.NODE_ENV === 'production') {
   const render = require('./render').default
   app.use(
-    //'/assets',
     expressStaticGzip('dist', {
-  		enableBrotli: true,
-  	})
+      enableBrotli: true,
+    })
   );
 
   app.use('*', render);

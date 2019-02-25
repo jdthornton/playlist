@@ -1,29 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import qs from 'qs';
 
-import { getPlaylist, makePlaylist, addTrack, savePlaylist } from '../reducers/tracks';
+import { addTrack } from '../reducers/tracks';
+import { openModal } from '../reducers/modal';
 import Playlist from '../components/Playlist';
 
-class PlaylistContainer extends React.Component {
-    componentWillMount() {
-      let { id } = qs.parse(this.props.location.search.slice(1));
-      if(this.props.match.params.query == 'make'){
-        this.props.makePlaylist(id)
-      }
-      else if(this.props.match.params.query == 'get'){
-        this.props.getPlaylist(id)
-      }
+class PlaylistContainer extends React.PureComponent {
+  componentWillMount(){
+    if(!this.props.mainTrack){
+      this.props.history.push('/')
     }
-    render() {
-      return(
-        <Playlist {...this.props.tracks} savePlaylist={this.props.savePlaylist} addTrack={this.props.addTrack} />
-      )
-    }
+  }
+  render(){
+    return <Playlist {...this.props} />
+  }
 }
 
-
 export default connect(
-    ({tracks}) => ({tracks}),
-    {getPlaylist, makePlaylist, addTrack, savePlaylist}
+    ({tracks, auth}) => ({mainTrack: tracks.mainTrack, url: auth.user && auth.user.images && auth.user.images[0] && auth.user.images[0].url}),
+    {addTrack, openModal}
 )(PlaylistContainer);

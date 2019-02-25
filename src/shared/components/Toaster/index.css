@@ -1,0 +1,25 @@
+.container {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  margin-left: -95px;
+  width: 190px;
+  display: flex;
+  flex-direction: column;
+  z-index: 30000;
+  color: #d28273;
+}
+.enter {
+  opacity: 0;
+}
+.enterActive {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+.exit {
+  opacity: 1;
+}
+.exitActive {
+  opacity: 0;
+  transition: opacity 300ms ease-in;
+}

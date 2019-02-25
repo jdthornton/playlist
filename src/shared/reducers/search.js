@@ -3,7 +3,6 @@ export const REQUEST_SUGGESTIONS = 'REQUEST_SUGGESTIONS'
 export const REQUEST_SUGGESTIONS__SUCCESS = 'REQUEST_SUGGESTIONS__SUCCESS';
 export const REQUEST_SUGGESTIONS__FAILURE = 'REQUEST_SUGGESTIONS__FAILURE';
 export const CLEAR_SUGGESTIONS = 'CLEAR_SUGGESTIONS';
-export const MAKE_SELECTION = 'MAKE_SELECTION';
 
 export const searchActions = {
     handleChange: payload => ({ type: INPUT_CHANGE, payload }),
@@ -11,9 +10,7 @@ export const searchActions = {
     clearSuggestions: () => ({ type: CLEAR_SUGGESTIONS })
 };
 
-export const makeSelection = payload => ({ type: MAKE_SELECTION, payload })
-
-const initialState = { value: '', suggestions: [], selection: null };
+const initialState = { value: '', suggestions: [] };
 
 const searchReducer = (previousState = initialState, { type, payload }) => {
     switch (type) {
@@ -32,11 +29,11 @@ const searchReducer = (previousState = initialState, { type, payload }) => {
               ...previousState,
               suggestions: []
             };
-        case MAKE_SELECTION:
+        case "@@router/LOCATION_CHANGE":
             return {
-              suggestions: [],
-              selection: payload
-            };
+              ...previousState,
+              value: ''
+            }
         default:
             return previousState;
     }

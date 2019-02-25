@@ -1,5 +1,5 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
-import { getPlaylists, getToken, getPlaylistsByCategory } from '../utils/SpotifyManager';
+import { getToken, getPlaylistsByCategory } from '../utils/SpotifyManager';
 import { getAuthState } from './auth';
 
 import {
@@ -10,7 +10,6 @@ import {
   REQUEST_PLAYLISTS__SUCCESS,
   REQUEST_PLAYLISTS__FAILURE
 } from '../reducers/playlists';
-
 
 function* playlistsSaga({payload}){
   try {
@@ -28,7 +27,7 @@ function* playlistsSaga({payload}){
     yield put({ type: REQUEST_PLAYLISTS__SUCCESS, payload: playlists.items })
 
   } catch (e) {
-    console.log("ERROR", e);
+    yield put({ type: REQUEST_PLAYLISTS__FAILURE })
   }
 }
 

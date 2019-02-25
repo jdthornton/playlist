@@ -11,6 +11,8 @@ export function* loginSaga(){
 
   const user = yield call(getUser, token);
   yield put({type: RECEIVE_USER_DATA, payload: user});
+
+  return {token, user}
 }
 
 export default function* authSagas() {

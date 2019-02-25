@@ -6,18 +6,20 @@ import Helmet from 'react-helmet';
 import Home from './components/Home';
 const Playlist = loadable(() => import('./containers/Playlist'))
 const Player = loadable(() => import('./containers/Player'))
+const Toaster = loadable(() => import('./containers/Toaster'))
 
-import styles from './index.css';
+import './index.css'
 
 const App = () =>
-    <div className={styles.container}>
+    <React.Fragment>
         <Helmet><title>Playlist</title></Helmet>
         <Player />
+        <Toaster />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path='/:query' component={Playlist} />
         </Switch>
-    </div>
+    </React.Fragment>
 
 
 export default App;

@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { requestPlaylists } from '../reducers/playlists';
-import { makeSelection } from '../reducers/search';
+import { viewPlaylist } from '../reducers/tracks';
 import Playlists from '../components/Playlists';
 
 class PlaylistsContainer extends React.PureComponent {
     componentWillMount() {
       if(!this.props.playlists.length){
-        this.props.requestPlaylists("Featured", 'featured-playlists')
+        this.props.requestPlaylists({name: "Featured", slug: "featured-playlists"})
       }
     }
     render(){
@@ -16,7 +16,7 @@ class PlaylistsContainer extends React.PureComponent {
         <Playlists
           isLoading={this.props.isLoading}
           playlists={this.props.playlists}
-          makeSelection={this.props.makeSelection}
+          handleClick={this.props.viewPlaylist}
         />
       )
     }
@@ -25,5 +25,5 @@ class PlaylistsContainer extends React.PureComponent {
 
 export default connect(
     ({playlists}) => ({playlists: playlists.playlists, isLoading: playlists.isLoading}),
-    {requestPlaylists, makeSelection}
+    {requestPlaylists, viewPlaylist}
 )(PlaylistsContainer);

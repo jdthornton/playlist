@@ -49,10 +49,9 @@
     fill: hsla(0,0%,100%,.8);
 }
 
-    .buttons > svg:hover {
-        fill: #fff;
-    }
-
+.buttons > svg:hover {
+    fill: #fff;
+}
 
 .progress {
     height: 5px;
@@ -72,35 +71,32 @@
     bottom: 0px;
 }
 
-    .progress > .bar > div {
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 50%;
-        background: hsla(0,0%,100%,.8);
-    }
+.progress > .bar > div {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: hsla(0,0%,100%,.8);
+}
 
-    .progress > .bar > div:hover {
-        background: #fff;
-    }
+.progress > .bar > div:hover {
+    background: #fff;
+}
 
 @media (min-width: 800px) {
-
     .popup {
         width: 600px;
-        right: 5px;
+        right: 30px;
         height: 70px;
-        bottom: 5px;
+        bottom: 10px;
         left: auto;
         padding: 15px;
     }
-
     .info > img {
         display: inline-block;
         margin-right: 10px;
     }
-
     .buttons {
         padding: 0 10%;
     }
